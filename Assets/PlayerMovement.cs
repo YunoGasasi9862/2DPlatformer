@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float CharacterSpeed = 50f;
+    public float CharacterSpeed = 10f;
     public float jumpspeed = 10f;
     bool isontheGround = true;
-    [SerializeField] Rigidbody2D rb;
+    private Rigidbody2D rb;
 
 
     private void Start()
@@ -16,18 +16,17 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        float Horizontal = Input.GetAxis("Horizontal") * CharacterSpeed * Time.deltaTime;
+        float Horizontal = Input.GetAxisRaw("Horizontal");
 
-        transform.Translate(Horizontal, 0,0);
+        rb.velocity= new Vector2( Horizontal * CharacterSpeed, rb.velocity.y); //it's better to use velocity
 
         if (Input.GetButtonDown("Jump") && isontheGround)
         {
-            rb.AddForce(Vector3.up * jumpspeed, ForceMode2D.Impulse);
-            rb.gravityScale = 1.5f;
+
+            rb.velocity= new Vector2(rb.velocity.x, jumpspeed);
+            rb.gravityScale = 2f;
             isontheGround = false;
 
-            //another method is this:
-            //rb.velocity=new vector3(0,speed,0);
         }
 
 
@@ -38,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
            if(collision.collider.tag=="Ground")
         {
-            rb.gravityScale = 1;
+            rb.gravityScale = 1f;
             isontheGround = true;
         }
     }
