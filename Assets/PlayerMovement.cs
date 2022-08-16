@@ -18,15 +18,15 @@ public class PlayerMovement : MonoBehaviour
     {
         float Horizontal = Input.GetAxisRaw("Horizontal");
 
-        rb.velocity= new Vector2( Horizontal * CharacterSpeed, rb.velocity.y); //it's better to use velocity
+        // rb.velocity= new Vector2( Horizontal * CharacterSpeed, rb.velocity.y); //it's better to use velocity
 
+        rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
         if (Input.GetButtonDown("Jump") && isontheGround)
         {
 
-            rb.velocity= new Vector2(rb.velocity.x, jumpspeed);
-            rb.gravityScale = 2f;
+            rb.velocity = new Vector2(rb.velocity.x, jumpspeed); //Since we are not even using Rb.addforce, or ForceMode2D.Impulse, the physics will automatically calculate the gravity etc
+            rb.gravityScale = 2.0f;
             isontheGround = false;
-
         }
 
 
