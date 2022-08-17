@@ -9,18 +9,30 @@ public class PlayerMovement : MonoBehaviour
     bool isontheGround = true;
     private Rigidbody2D rb;
 
+    private Animator anim;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
+
+
         float Horizontal = Input.GetAxisRaw("Horizontal");
-
         // rb.velocity= new Vector2( Horizontal * CharacterSpeed, rb.velocity.y); //it's better to use velocity
-
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
+
+        if(rb.velocity.x != 0)
+        {
+            anim.SetBool("RUNNING", true);
+        }
+        else
+        {
+            anim.SetBool("RUNNING", false);
+        }
+
         if (Input.GetButtonDown("Jump") && isontheGround)
         {
 
