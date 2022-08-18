@@ -11,36 +11,35 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator anim;
 
+    private SpriteRenderer sr;
+
+    float Horizontal = 0f;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
     }
     void Update()
     {
 
 
-        float Horizontal = Input.GetAxisRaw("Horizontal");
-        // rb.velocity= new Vector2( Horizontal * CharacterSpeed, rb.velocity.y); //it's better to use velocity
+         Horizontal = Input.GetAxisRaw("Horizontal");
+
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
 
-        if(rb.velocity.x != 0)
-        {
-            anim.SetBool("RUNNING", true);
-        }
-        else
-        {
-            anim.SetBool("RUNNING", false);
-        }
+        
 
         if (Input.GetButtonDown("Jump") && isontheGround)
         {
 
-            rb.velocity = new Vector2(rb.velocity.x, jumpspeed); //Since we are not even using Rb.addforce, or ForceMode2D.Impulse, the physics will automatically calculate the gravity etc
+            rb.velocity = new Vector2(rb.velocity.x, jumpspeed);//Since we are not even using Rb.addforce, or ForceMode2D.Impulse, the physics will automatically calculate the gravity etc
             rb.gravityScale = 2.0f;
             isontheGround = false;
         }
 
+        ImplementAnimation();
+        ChangeDirection();
 
 
     }
@@ -51,6 +50,30 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.gravityScale = 1f;
             isontheGround = true;
+        }
+    }
+
+    private void ImplementAnimation()
+    {
+        if (rb.velocity.x != 0)
+        {
+            anim.SetBool("RUNNING", true);
+        }
+        else
+        {
+            anim.SetBool("RUNNING", false);
+
+        }
+    }
+
+    private void ChangeDirection()
+    {
+        if(Horizontal<0f)
+        {
+            sr.flipX = true;
+        }else
+        {
+            sr.flipX = false;
         }
     }
 }
