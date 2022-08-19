@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float CharacterSpeed = 10f;
-    public float jumpspeed = 10f;
+    [SerializeField] float CharacterSpeed = 10f;
+    [SerializeField] float jumpspeed = 10f;
     bool isontheGround = true;
     private Rigidbody2D rb;
 
@@ -24,18 +24,16 @@ public class PlayerMovement : MonoBehaviour
     {
 
 
-         Horizontal = Input.GetAxisRaw("Horizontal");
+        Horizontal = Input.GetAxisRaw("Horizontal");
 
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
 
-        
-
-        if (Input.GetButtonDown("Jump") && isontheGround)
+        if(isontheGround && Input.GetButtonDown("Jump"))
         {
-
-            rb.velocity = new Vector2(rb.velocity.x, jumpspeed);//Since we are not even using Rb.addforce, or ForceMode2D.Impulse, the physics will automatically calculate the gravity etc
+            rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
             rb.gravityScale = 2.0f;
             isontheGround = false;
+
         }
 
         ImplementAnimation();
@@ -55,14 +53,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void ImplementAnimation()
     {
-        if (rb.velocity.x != 0)
+       if(rb.velocity.x!=0)
         {
             anim.SetBool("RUNNING", true);
         }
         else
         {
             anim.SetBool("RUNNING", false);
-
         }
     }
 
