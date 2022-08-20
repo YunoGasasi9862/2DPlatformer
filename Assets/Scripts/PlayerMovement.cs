@@ -28,10 +28,10 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
 
-        if(isontheGround && Input.GetButtonDown("Jump"))
+        if( Input.GetButtonDown("Jump") && isontheGround)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
-            rb.gravityScale = 2.0f;
+             rb.velocity = new Vector2(rb.velocity.x , jumpspeed);
+             rb.gravityScale = 2.0f;
             isontheGround = false;
 
         }
