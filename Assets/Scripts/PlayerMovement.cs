@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     float Horizontal = 0f;
 
     private enum MovementState { idle, running, jumping, falling};
-    private MovementState state;
+    private MovementState state = MovementState.idle;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
         Horizontal = Input.GetAxisRaw("Horizontal");
 
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
-
         if( Input.GetButtonDown("Jump") && isontheGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
@@ -58,20 +57,21 @@ public class PlayerMovement : MonoBehaviour
     {
        if(rb.velocity.x!=0)
         {
-            anim.SetBool("RUNNING", true);
+            
         }
         else
         {
-            anim.SetBool("RUNNING", false);
+           
         }
     }
 
     private void ChangeDirection()
     {
-        if(Horizontal<0f)
+       if(Horizontal <0f)
         {
             sr.flipX = true;
-        }else
+        }
+        else
         {
             sr.flipX = false;
         }
