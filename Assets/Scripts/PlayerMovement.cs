@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     float Horizontal = 0f;
 
     private enum MovementState { idle, running, jumping, falling};
-    private MovementState state = MovementState.idle;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -48,21 +47,36 @@ public class PlayerMovement : MonoBehaviour
     {
            if(collision.collider.tag=="Ground")
         {
-            rb.gravityScale = 1f;
+            rb.gravityScale = 1;
             isontheGround = true;
         }
     }
 
     private void ImplementAnimation()
     {
-       if(rb.velocity.x!=0)
+        MovementState state;
+        if (rb.velocity.x > 0)
         {
-            
+            state = MovementState.running;
         }
-        else
+        else if (rb.velocity.x < 0)
         {
-           
+            state = MovementState.running;
+        } else
+        {
+            state = MovementState.idle;
         }
+
+        if(rb.velocity.y > .1f)
+        {
+            state = MovementState.jumping;
+
+        }else if(rb.velocity.y < -.1f)
+        {
+            state = MovementState.falling;
+        }
+
+        anim.SetInteger("State", (int)state);
     }
 
     private void ChangeDirection()
