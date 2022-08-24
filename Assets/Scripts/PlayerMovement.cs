@@ -15,19 +15,22 @@ public class PlayerMovement : MonoBehaviour
 
     float Horizontal = 0f;
 
+    private BoxCollider2D collider;
+    [SerializeField] LayerMask jumpableGround;
+
     private enum MovementState { idle, running, jumping, falling};
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        collider = GetComponent<BoxCollider2D>();
     }
     void Update()
     {
 
 
         Horizontal = Input.GetAxisRaw("Horizontal");
-
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
         if( Input.GetButtonDown("Jump") && isontheGround)
         {
@@ -55,23 +58,23 @@ public class PlayerMovement : MonoBehaviour
     private void ImplementAnimation()
     {
         MovementState state;
-        if (rb.velocity.x > 0)
+        if(Horizontal > 0f)
         {
             state = MovementState.running;
+        }else if(Horizontal <0f)
+        {
+            state = MovementState.running;
+
         }
-        else if (rb.velocity.x < 0)
-        {
-            state = MovementState.running;
-        } else
+        else
         {
             state = MovementState.idle;
         }
 
-        if(rb.velocity.y > .1f)
+        if(rb.velocity.y > 0.1f)
         {
             state = MovementState.jumping;
-
-        }else if(rb.velocity.y < -.1f)
+        }else if(rb.velocity.y <-0.1f)
         {
             state = MovementState.falling;
         }
@@ -89,5 +92,11 @@ public class PlayerMovement : MonoBehaviour
         {
             sr.flipX = false;
         }
+    }
+
+    private bool isGrounder()
+    {
+        Physics2D.BoxCast(collider.bounds.center, collider.bounds.size,
+            0f, Vector2.down, .1f, )
     }
 }
