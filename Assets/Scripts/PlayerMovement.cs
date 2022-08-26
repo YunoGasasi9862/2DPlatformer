@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float CharacterSpeed = 10f;
     [SerializeField] float jumpspeed = 10f;
-    bool isontheGround = true;
     private Rigidbody2D rb;
 
     private Animator anim;
@@ -15,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     float Horizontal = 0f;
 
-    private BoxCollider2D collider;
+    private BoxCollider2D col;
+
     [SerializeField] LayerMask jumpableGround;
 
     private enum MovementState { idle, running, jumping, falling};
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-        collider = GetComponent<BoxCollider2D>();
+        col = GetComponent<BoxCollider2D>();
     }
     void Update()
     {
@@ -32,11 +32,10 @@ public class PlayerMovement : MonoBehaviour
 
         Horizontal = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
-        if( Input.GetButtonDown("Jump") && isontheGround)
+        if( Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
-            rb.gravityScale = 2.0f;
-            isontheGround = false;
+
 
         }
 
@@ -44,15 +43,6 @@ public class PlayerMovement : MonoBehaviour
         ChangeDirection();
 
 
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-           if(collision.collider.tag=="Ground")
-        {
-            rb.gravityScale = 1;
-            isontheGround = true;
-        }
     }
 
     private void ImplementAnimation()
@@ -80,7 +70,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         anim.SetInteger("State", (int)state);
-    }
+
+     }
 
     private void ChangeDirection()
     {
@@ -94,9 +85,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool isGrounder()
+    private bool isGrounded()
     {
-        Physics2D.BoxCast(collider.bounds.center, collider.bounds.size,
-            0f, Vector2.down, .1f, )
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size,
+            0f, Vector2.down, .1f, jumpableGround);
     }
 }
