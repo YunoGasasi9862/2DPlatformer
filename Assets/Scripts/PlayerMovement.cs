@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D col;
 
     [SerializeField] LayerMask jumpableGround;
+    [SerializeField] LayerMask wall;
+
+    private float jumpX = 10f;
+    private float JumpY = 10f;
 
     private enum MovementState { idle, running, jumping, falling};
     private void Start()
@@ -32,12 +36,33 @@ public class PlayerMovement : MonoBehaviour
 
         Horizontal = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
+
         if( Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
 
 
         }
+
+
+        if(isTouchingtheWall())
+        {
+            rb.gravityScale = 0f;
+
+            if (Input.GetButtonDown("Jump"))
+            {
+
+                if (Horizontal < 0f)
+                {
+                    rb.velocity = new Vector2(jumpX * 2, JumpY * 2);
+                    sr.flipX = false;
+
+                }
+
+            }
+        }
+
+
 
         ImplementAnimation();
         ChangeDirection();
@@ -89,5 +114,24 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.BoxCast(col.bounds.center, col.bounds.size,
             0f, Vector2.down, .1f, jumpableGround);
+    }
+    private bool isTouchingtheWall()
+    {
+        if(Horizontal> 0f)
+        {
+
+            return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.right, .3f, wall);
+
+        }else if( Horizontal < 0f)
+        {
+
+            return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.left, .3f, wall);
+
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }
