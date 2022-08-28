@@ -19,9 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask jumpableGround;
     [SerializeField] LayerMask wall;
 
-    private float jumpX = 10f;
-    private float JumpY = 10f;
-
+    [SerializeField] bool jumpOnce = true;
     private enum MovementState { idle, running, jumping, falling};
     private void Start()
     {
@@ -44,23 +42,26 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-
-        if(isTouchingtheWall())
-        {
-            rb.gravityScale = 0f;
-
-            if (Input.GetButtonDown("Jump"))
+           if (Input.GetButtonDown("Jump") && isTouchingtheWallRight() && jumpOnce)
             {
 
-                if (Horizontal < 0f)
-                {
-                    rb.velocity = new Vector2(jumpX * 2, JumpY * 2);
-                    sr.flipX = false;
-
-                }
+             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
+            jumpOnce = false;
 
             }
+          if (Input.GetButtonDown("Jump") && isTouchingtheWallLeft() && jumpOnce)
+             {
+
+            rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
+            jumpOnce = false;
+
+
+         }
+          if(isGrounded())
+        {
+            jumpOnce = true;
         }
+
 
 
 
@@ -112,26 +113,18 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size,
-            0f, Vector2.down, .1f, jumpableGround);
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.1f, jumpableGround);
+
     }
-    private bool isTouchingtheWall()
+    private bool isTouchingtheWallRight()
     {
-        if(Horizontal> 0f)
-        {
 
-            return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.right, .3f, wall);
 
-        }else if( Horizontal < 0f)
-        {
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.right, 0.3f, wall) ;
+    }
+    private bool isTouchingtheWallLeft()
+    {
 
-            return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.left, .3f, wall);
-
-        }
-        else
-        {
-            return false;
-        }
-
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.left, 0.3f, wall);
     }
 }
