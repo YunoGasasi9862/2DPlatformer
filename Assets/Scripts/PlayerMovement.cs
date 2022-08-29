@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         Horizontal = Input.GetAxisRaw("Horizontal");
+
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
 
         if( Input.GetButtonDown("Jump") && isGrounded())
@@ -80,12 +81,12 @@ public class PlayerMovement : MonoBehaviour
         }else if(Horizontal <0f)
         {
             state = MovementState.running;
-
         }
         else
         {
             state = MovementState.idle;
         }
+
 
         if(rb.velocity.y > 0.1f)
         {
@@ -120,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
 
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.right, 0.3f, wall) ;
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.right, 0.3f, wall);
     }
     private bool isTouchingtheWallLeft()
     {
