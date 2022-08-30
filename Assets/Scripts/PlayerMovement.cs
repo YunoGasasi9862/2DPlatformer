@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ChangeDirection()
     {
-       if(Horizontal <0f)
+      if(Horizontal <0f)
         {
             sr.flipX = true;
         }
@@ -110,12 +110,12 @@ public class PlayerMovement : MonoBehaviour
         {
             sr.flipX = false;
         }
+
     }
 
     private bool isGrounded()
     {
         return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.1f, jumpableGround);
-
     }
     private bool isTouchingtheWallRight()
     {
