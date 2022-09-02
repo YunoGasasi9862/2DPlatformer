@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
 
 
         Horizontal = Input.GetAxisRaw("Horizontal");
-
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
 
         if( Input.GetButtonDown("Jump") && isGrounded())
@@ -51,17 +50,17 @@ public class PlayerMovement : MonoBehaviour
 
             }
           if (Input.GetButtonDown("Jump") && isTouchingtheWallLeft() && jumpOnce)
-             {
+          {
 
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
             jumpOnce = false;
 
 
-         }
+          }
           if(isGrounded())
-        {
+          {
             jumpOnce = true;
-        }
+          }
 
 
 
