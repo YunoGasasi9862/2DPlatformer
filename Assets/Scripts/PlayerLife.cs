@@ -1,0 +1,36 @@
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PlayerLife : MonoBehaviour
+{
+    [SerializeField] private Animator anim;
+    private Rigidbody2D rb;
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Trap"))
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+
+        anim.SetTrigger("Death"); //this is how set a trigger
+        rb.bodyType = RigidbodyType2D.Static;
+        Invoke("RestartLevel", 1f);
+    }
+
+    private void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+}
