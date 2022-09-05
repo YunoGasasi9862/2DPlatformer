@@ -25,7 +25,6 @@ public class PlayerLife : MonoBehaviour
 
         anim.SetTrigger("Death"); //this is how set a trigger
         rb.bodyType = RigidbodyType2D.Static;
-        Invoke("RestartLevel", 1f);
     }
 
     private void RestartLevel()
