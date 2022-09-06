@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -39,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
         if( Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
-
 
         }
 
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (rb.velocity.y >= 0.1f)
+       if(rb.velocity.y >= 0.1f)
         {
             state = MovementState.jumping;
         }else if(rb.velocity.y <=-0.1f)
