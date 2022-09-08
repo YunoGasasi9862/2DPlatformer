@@ -34,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
 
         Horizontal = Input.GetAxisRaw("Horizontal");
 
-
         rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
 
         if( Input.GetButtonDown("Jump") && isGrounded())
@@ -90,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-       if(rb.velocity.y >= 0.1f)
+       if(rb.velocity.y >=0.1f)
         {
             state = MovementState.jumping;
         }else if(rb.velocity.y <=-0.1f)
@@ -117,7 +116,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.3f, jumpableGround);
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.3f, jumpableGround
+            );
     }
     private bool isTouchingtheWallRight()
     {
