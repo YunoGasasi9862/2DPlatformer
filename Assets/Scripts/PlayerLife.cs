@@ -23,7 +23,7 @@ public class PlayerLife : MonoBehaviour
     private void Die()
     {
 
-        anim.SetTrigger("Death"); //this is how set a trigger
+        anim.SetTrigger("Death"); //setting the trigger for animation
         rb.bodyType = RigidbodyType2D.Static;
     }
 

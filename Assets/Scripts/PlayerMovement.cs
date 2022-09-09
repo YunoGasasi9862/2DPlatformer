@@ -116,8 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.3f, jumpableGround
-            );
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.3f, jumpableGround);
     }
     private bool isTouchingtheWallRight()
     {

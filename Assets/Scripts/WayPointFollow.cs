@@ -7,24 +7,38 @@ public class WayPointFollow : MonoBehaviour
 {
    [SerializeField] private GameObject[] waypoints;
 
-    //  private int currentWayPointIndex = 0;
+     private int currentWayPointIndex = 0;
 
-    //  [SerializeField] private float speed = 2f;
-
-    [SerializeField] Vector3 pos;
+    [SerializeField] private float speed = 2f;
 
     private void Start()
     {
-        pos = transform.position;
+       // pos = transform.position;
+
     }
     void Update()
     {
 
         //THIS IS MY APPROACH FOR USING SIN WAVE FOR MOVING THE PLATFORM!!!!!
+        // amplitude = Mathf.Abs(waypoints[0].transform.position.x - waypoints[1].transform.position.x);
 
-        float amplitude = Mathf.Abs(waypoints[0].transform.position.x - waypoints[1].transform.position.x);
-        transform.position = pos +  transform.right * amplitude/2 * Mathf.Cos(Time.time);
-      
+        // transform.position = pos + transform.right * (amplitude/2 + difference)* (Mathf.Sin(Time.time));  //pos makes sure that it remains at its exact position, and oscillates from there!!!
+
+        if (  Vector2.Distance(waypoints[currentWayPointIndex].transform.position, transform.position) < .1f)
+        {
+
+            currentWayPointIndex++;
+
+            if (currentWayPointIndex >= waypoints.Length)
+            {
+                currentWayPointIndex = 0;
+            }
+
+        }
+     
+
+        transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWayPointIndex].transform.position, speed * Time.deltaTime);
+
 
     }
 }
