@@ -39,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
         if( Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
-
         }
 
            if (Input.GetButtonDown("Jump") && isTouchingtheWallRight() && jumpOnce)
@@ -96,7 +95,6 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.falling;
         }
-
         anim.SetInteger("State", (int)state);
 
      }

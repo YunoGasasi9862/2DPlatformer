@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Kiwi
   - Trap
+  - Platform
   layers:
   - Default
   - TransparentFX
