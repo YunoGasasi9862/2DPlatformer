@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask wall;
 
     [SerializeField] bool jumpOnce = true;
-    private enum MovementState { idle, running, jumping, falling};
+    private enum MovementState {idle, running, jumping, falling};
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
