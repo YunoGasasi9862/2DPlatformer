@@ -73,20 +73,17 @@ public class PlayerMovement : MonoBehaviour
     private void ImplementAnimation()
     {
         MovementState state;
-        if(Horizontal >0f)
+        if(Horizontal > 0f)
         {
             state = MovementState.running;
-
         }else if(Horizontal <0f)
         {
             state = MovementState.running;
-
         }
         else
         {
             state = MovementState.idle;
         }
-
 
        if(rb.velocity.y >=0.1f)
         {
