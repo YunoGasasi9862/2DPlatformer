@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] bool jumpOnce = true;
     private enum MovementState {idle, running, jumping, falling};
+
+    [SerializeField] private AudioSource JumpSound;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,11 +36,12 @@ public class PlayerMovement : MonoBehaviour
 
         Horizontal = Input.GetAxisRaw("Horizontal");
 
-        rb.velocity = new Vector2(Horizontal * CharacterSpeed, rb.velocity.y);
+        rb.velocity = new Vector3(Horizontal * CharacterSpeed, rb.velocity.y);
 
         if( Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
+            JumpSound.Play();
         }
 
            if (Input.GetButtonDown("Jump") && isTouchingtheWallRight() && jumpOnce)
@@ -85,10 +88,10 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.idle;
         }
 
-       if(rb.velocity.y >=0.1f)
+        if(rb.velocity.y >=0.1f)
         {
             state = MovementState.jumping;
-        }else if(rb.velocity.y <=-0.1f)
+        }else if(rb.velocity.y <=-.1f)
         {
             state = MovementState.falling;
         }
