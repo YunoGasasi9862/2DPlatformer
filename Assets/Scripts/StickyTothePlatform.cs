@@ -8,7 +8,7 @@ public class StickyTothePlatform : MonoBehaviour
     {
         if(collision.CompareTag("Platform"))
         {
-            transform.parent = collision.transform; //this sets the transform or make the collisions child
+            transform.parent = collision.transform;//this sets the transform or make the collisions child
         }
     }
 
