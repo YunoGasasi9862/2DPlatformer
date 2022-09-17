@@ -1440,6 +1440,31 @@ Transform:
   m_Father: {fileID: 1560582827}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1204105646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3598886657284332960, guid: c14d1933fb52d214e91f3b7fd81915db, type: 3}
+  m_PrefabInstance: {fileID: 3598886657490039801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1204105652
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204105646}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c338c652b6265cd4ab48cd6dc007b9e8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1248664108
 GameObject:
   m_ObjectHideFlags: 0
@@ -105693,6 +105718,10 @@ PrefabInstance:
       propertyPath: KiwiText
       value: 
       objectReference: {fileID: 1506521454}
+    - target: {fileID: 2486999782272900406, guid: 5569f77842ad33b4cb3043198c3e5c63, type: 3}
+      propertyPath: PlatformJump.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5569f77842ad33b4cb3043198c3e5c63, type: 3}
 --- !u!1001 &3598886657490039801

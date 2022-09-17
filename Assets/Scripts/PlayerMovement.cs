@@ -18,9 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D col;
 
     [SerializeField] LayerMask jumpableGround;
-    [SerializeField] LayerMask wall;
+    [SerializeField] LayerMask PlatformJump;
 
-    [SerializeField] bool jumpOnce = true;
     private enum MovementState {idle, running, jumping, falling};
 
     [SerializeField] private AudioSource JumpSound;
@@ -46,26 +45,11 @@ public class PlayerMovement : MonoBehaviour
             JumpSound.Play();
         }
 
-           if (Input.GetButtonDown("Jump") && isTouchingtheWallRight() && jumpOnce)
-            {
-
-             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
-            jumpOnce = false;
-
-            }
-          if (Input.GetButtonDown("Jump") && isTouchingtheWallLeft() && jumpOnce)
-          {
-
+        if(Input.GetButtonDown("Jump") && isOnthePlatform())
+        {
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
-            jumpOnce = false;
-
-
-          }
-          if(isGrounded())
-          {
-            jumpOnce = true;
-          }
-
+            JumpSound.Play();
+        }
 
 
 
@@ -90,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.idle;
         }
 
+        
         if(rb.velocity.y >=.1f)
         {
             state = MovementState.jumping;
@@ -97,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.falling;
         }
+
         anim.SetInteger("State", (int)state);
 
      }
@@ -116,17 +102,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0.3f, jumpableGround);
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, .3f, jumpableGround);
     }
-    private bool isTouchingtheWallRight()
+
+    private bool isOnthePlatform()
     {
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, .3f, PlatformJump);
 
-
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.right, 0.3f, wall);
-    }
-    private bool isTouchingtheWallLeft()
-    {
-
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.left, 0.3f, wall);
     }
 }
