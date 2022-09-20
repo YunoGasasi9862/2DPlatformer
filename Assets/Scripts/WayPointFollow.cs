@@ -17,11 +17,11 @@ public class WayPointFollow : MonoBehaviour
    
     void Update()
     {
-       if(Vector2.Distance(transform.position, waypoints[currentWayPointIndex].transform.position) <=0.1f)
+       if(Vector2.Distance(transform.position, waypoints[currentWayPointIndex].transform.position)<=.1f)
         {
             currentWayPointIndex++;
 
-            if(currentWayPointIndex>= waypoints.Length)
+            if (currentWayPointIndex >= waypoints.Length)
             {
                 currentWayPointIndex = 0;
             }
